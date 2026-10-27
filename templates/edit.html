@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>StudentHub | Edit Student</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="form-page">
+
+        <div class="form-card">
+
+            <div class="form-page-header">
+                <h1>Edit Student</h1>
+                <p>Update the information for student #{{ student.student_id }}.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('edit_student', student_id=student.student_id) }}" method="POST"
+                class="student-form">
+
+                <div class="form-group">
+                    <label for="first_name">First Name *</label>
+                    <input type="text" id="first_name" name="first_name" maxlength="50" value="{{ student.first_name }}"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last_name">Last Name *</label>
+                    <input type="text" id="last_name" name="last_name" maxlength="50" value="{{ student.last_name }}"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" maxlength="100" value="{{ student.email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" maxlength="15" value="{{ student.phone or '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="">Select gender</option>
+                        <option value="Male" {% if student.gender=='Male' %}selected{% endif %}>
+                            Male
+                        </option>
+                        <option value="Female" {% if student.gender=='Female' %}selected{% endif %}>
+                            Female
+                        </option>
+                        <option value="Other" {% if student.gender=='Other' %}selected{% endif %}>
+                            Other
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth"
+                        value="{{ student.date_of_birth or '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course *</label>
+                    <input type="text" id="course" name="course" maxlength="50" value="{{ student.course }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" name="department" maxlength="50"
+                        value="{{ student.department or '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="semester">Semester *</label>
+                    <input type="number" id="semester" name="semester" min="1" max="12" value="{{ student.semester }}"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="admission_year">Admission Year</label>
+                    <input type="number" id="admission_year" name="admission_year" min="1901" max="2155"
+                        value="{{ student.admission_year or '' }}">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" maxlength="50" value="{{ student.city or '' }}">
+                </div>
+
+                <div class="form-actions full-width">
+                    <button type="submit" class="primary-button">
+                        Save Changes
+                    </button>
+
+                    <a href="{{ url_for('home') }}" class="secondary-button">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
